@@ -12,8 +12,6 @@ bash centos-install.sh
 
 ## Manual Installation
 ### Install dependencies
-sudo yum install epel-release
-
 sudo yum install git python36
 
 python3 -m install virtualenv --user
