@@ -5,7 +5,7 @@ This is a single end-point API that accepts valid JSON containg a square grid (r
 * The color (red/black) that matches
 * The direction of the match
 
-## Automatic Installation
+## Automatic Installation (CentOS 7 only)
 curl -s -L https://raw.githubusercontent.com/StephenButcherTXST/checkers/main/centos-install.sh -o centos-install.sh
 
 bash centos-install.sh
