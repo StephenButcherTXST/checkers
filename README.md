@@ -64,7 +64,7 @@ This service is run using the gunicorn application. The default bind IP address 
 #### Change the number of workers
 The default value is set to 4 workers (-w 4). In order to adjust the number of workers change the value after the -w parameter for ExecStart.
 #### Additional settings / tuning
-gunicorn supports many additional parameters which can be found by running gunicorn --help. Any additional parameters you wish to use will need to be appended to ExecStart.
+gunicorn supports many additional parameters which can be found by running _gunicorn --help_. Any additional parameters you wish to use will need to be appended to ExecStart.
 #### Apply changes to service
 After making changes to checkers_api.service, you will need to re-read and restart the service file by running _sudo systemctl daemon-reload_ and then _sudo systemctl restart checkers_api_
 
