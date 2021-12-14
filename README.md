@@ -1,6 +1,6 @@
 # Checkers
 
-This is a single end-point API that accepts valid JSON containg a square grid of black/red/empty checkers and calculates locations and directions of consecutive matches of red or black checkers. The API returns JSON containing results with:
+This is a single end-point API that accepts valid JSON containg a square grid (rows=columns) of black/red/empty checkers and calculates locations and directions of consecutive matches of red or black checkers. The API returns JSON containing results with:
 * The starting location of any matches
 * The color (red/black) that matches
 * The direction of the match
@@ -25,5 +25,38 @@ sed -i "s#&lt;user&gt;#$(whoami)#g" checkers_api.service
 sudo cp checkers_api.service /etc/systemd/system
 ### Enable and start service
 sudo systemctl enable --now checkers_api.service
+### Add firewall exception
+#### Determine current firewall zone
+firewall-cmd --get-active-zones
+#### Open TCP port 5000 (change public if zone returned from firewall-cmd is different)
+sudo firewall-cmd --zone=public --add-port=5000/tcp
 
-## Configuration
+## Configuration options
+### Inside main.py, the following options can be modified for grid_config:
+#### "size" : Size of the square grid
+Default value: 8.
+
+#### "consecutive_checkers" : Number of consecutive checkers to match
+Default value: 4.
+
+#### Expected string values to match black (B), red (R), empty square (-)
+The values expected for representing Black, Red and Empty in the input JSON.
+Default values: "black": "B", "red": "R", "empty": "-"
+
+#### "case_sensitive" : Require case sensitive matching for black/red values
+Default value: False
+
+#### "allow_overlap" : Allow overlapping results
+Default value: True
+
+### The following changes can be made in /etc/systemd/system/checkers_api.service
+#### Install location
+If you install the service into a location outside of your home folder, you will need to modify the \[Service\] definition in checkers_api.service.
+Ensure you update the paths for WorkingDirectory, Environment and ExecStart correctly, and that User and Group reflect a user and group that has access to the specified path(s).
+#### Change IP and/or Port number
+This service is run using the gunicorn application. The default bind IP address and port number that gunicorn uses is all interfaces and port 5000 (-b 0.0.0.0:5000). If you wish to change the IP or port number that the service listens on, you will need to update the -b parameter to &lt;ip address&gt;:&lt;port&gt; for ExecStart. Note: When changing this, be sure to update the firewall rule accordingly.
+#### Change the number of workers
+The default value is set to 4 workers (-w 4). In order to adjust the number of workers change the value after the -w parameter for ExecStart.
+#### Additional settings / tuning
+gunicorn supports many additional parameters which can be found by running _gunicorn --help_. Any additional parameters you wish to use will need to be appended to ExecStart.
+
