@@ -11,6 +11,7 @@ echo "  Automatically add firewall exception, if FirewallD is in use. [sudo]"
 echo 
 read -p "Continue (Y/N):" -n 1 -r CONTINUE
 if [[ ! $CONTINUE =~ ^[Yy]$ ]]; then 
+    echo ""
     exit 1
 fi
 
