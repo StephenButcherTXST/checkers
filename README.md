@@ -10,9 +10,7 @@ This is a single end-point API that accepts valid JSON containg a square grid of
 sudo yum install git python36
 python3 -m install virtualenv --user
 ### Create folder
-mkdir ~/checkers
-
-cd ~/checkers
+mkdir ~/checkers && cd ~/checkers
 ### Clone this repository
 git clone https://github.com/StephenButcherTXST/checkers .
 ### Setup virtual environment
@@ -26,6 +24,6 @@ sed -i "s#&lt;user&gt;#$(whoami)#g" checkers_api.service
 ### Install systemd file
 sudo cp checkers_api.service /etc/systemd/system
 ### Enable and start service
-
+sudo systemctl enable --now checkers_api.service
 
 ## Configuration
