@@ -44,7 +44,7 @@ The values expected for representing Black, Red and Empty in the input JSON.
 Default values: "black": "B", "red": "R", "empty": "-"
 
 #### "case_sensitive" : Require case sensitive matching for black/red values
-Default value: False
+Default value: False. 
 
 #### "allow_overlap" : Allow overlapping results
 Default value: True
@@ -58,5 +58,16 @@ This service is run using the gunicorn application. The default bind IP address 
 #### Change the number of workers
 The default value is set to 4 workers (-w 4). In order to adjust the number of workers change the value after the -w parameter for ExecStart.
 #### Additional settings / tuning
-gunicorn supports many additional parameters which can be found by running _gunicorn --help_. Any additional parameters you wish to use will need to be appended to ExecStart.
+gunicorn supports many additional parameters which can be found by running gunicorn --help. Any additional parameters you wish to use will need to be appended to ExecStart.
 
+## Testing
+### Unit test with test_api.py
+#### Activate the virtual environment
+cd ~/checkers && source env/bin/activate
+#### (Optional) modify the valid_grid in test_api.py
+If you changed any grid settings ("size","black","red", "empty"), you will need to update "valid_grid"
+#### Run the test
+Run _python -m unittest test_api.py_
+
+### Manual test with manual_test.py
+A simplistic test file (manual_test.py) has been provided to test the service locally or remotely. Edit the file and modify "url" if you changed the port number, or wish to test a remote service. You will also need to modify "valid_grid" if you adjusted any grid settings ("size","black","red", "empty") in main.py.
