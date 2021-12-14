@@ -20,7 +20,7 @@ virtualenv env
 ### Activate the virtual environment
 source env/bin/activate
 ### Install Python requirements
-pip install -r checkers_api/requirements.txt
+pip install -r api/requirements.txt
 ### Modify the systemd service file
 sed -i "s#<user>#$(whoami)#g" checkers_api.service 
 ### Install systemd file
