@@ -61,6 +61,7 @@ The default value is set to 4 workers (-w 4). In order to adjust the number of w
 gunicorn supports many additional parameters which can be found by running gunicorn --help. Any additional parameters you wish to use will need to be appended to ExecStart.
 
 ## Testing
+The commands below assume installation to current user's home folder (~/checkers).
 ### Unit test with test_api.py
 #### Activate the virtual environment
 cd ~/checkers && source env/bin/activate
@@ -71,3 +72,5 @@ Run _python -m unittest test_api.py_
 
 ### Manual test with manual_test.py
 A simplistic test file (manual_test.py) has been provided to test the service locally or remotely. Edit the file and modify "url" if you changed the port number, or wish to test a remote service. You will also need to modify "valid_grid" if you adjusted any grid settings ("size","black","red", "empty") in main.py.
+### Run the test
+cd ~/checkers && python ./manual_test.py
