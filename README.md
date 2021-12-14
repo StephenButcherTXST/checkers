@@ -49,6 +49,9 @@ Default value: False.
 #### "allow_overlap" : Allow overlapping results
 Default value: True
 
+#### Restart service after changes
+After making changes to main.py, you will need to restart the service file by running _sudo systemctl restart checkers_api_
+
 ### The following changes can be made in /etc/systemd/system/checkers_api.service
 #### Install location
 If you install the service into a location outside of your home folder, you will need to modify the \[Service\] definition in checkers_api.service.
@@ -59,6 +62,8 @@ This service is run using the gunicorn application. The default bind IP address 
 The default value is set to 4 workers (-w 4). In order to adjust the number of workers change the value after the -w parameter for ExecStart.
 #### Additional settings / tuning
 gunicorn supports many additional parameters which can be found by running gunicorn --help. Any additional parameters you wish to use will need to be appended to ExecStart.
+#### Apply changes to service
+After making changes to checkers_api.service, you will need to re-read and restart the service file by running _sudo systemctl daemon-reload_ and then _sudo systemctl restart checkers_api_
 
 ## Testing
 The commands below assume installation to current user's home folder (~/checkers).
