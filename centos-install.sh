@@ -8,19 +8,20 @@ echo "  Create a python virtual environment, and populate it with packages from 
 echo "  Register and start the service with systemd [sudo]"
 echo "  Automatically add firewall exception, if FirewallD is in use. [sudo]"
 
-echo 
+echo ""
 read -p "Continue (Y/N):" -n 1 -r CONTINUE
 if [[ ! $CONTINUE =~ ^[Yy]$ ]]; then 
     echo ""
     exit 1
 fi
 
+echo ""
 echo "===== Installing dependencies ====="
 sudo yum install -y epel-release
 sudo yum install -y git python36
 python3 -m pip install virtualenv --user
 
-echo "===== ===== Creating folder ====="
+echo "===== Creating folder ====="
 mkdir ~/checkers && cd ~/checkers
 
 echo "===== Cloning the repository ====="
@@ -38,14 +39,14 @@ pip install -r api/requirements.txt
 echo "===== Leaving the virtual environment ====="
 deactivate
 
-echo "===== Modify the systemd service file ====="
+echo "===== Modifying the systemd service file for current user ====="
 sed -i "s#<user>#$(whoami)#g" checkers_api.service
 
-echo "===== Install systemd file ====="
+echo "===== Installing systemd service file ====="
 sudo cp checkers_api.service /etc/systemd/system
 
-echo "===== Enable and start service ====="
-sudo systemctl enable --now checkers_api.service
+echo "===== Enabling systemd service ====="
+sudo systemctl enable checkers_api.service
 
 echo "===== Getting current firewall zone ====="
 FWD=$(sudo firewall-cmd --state)
@@ -56,4 +57,13 @@ if [[ "$FWD" -eq "running" ]]; then
 else
     echo "FirewallD not running or not found."
     echo "Firewall rule will need to be added manually at allow inbound 5000/tcp"
+fi
+
+echo ""
+read -p "Would you like to start the service (Y/N):" -n 1 -r CONTINUE
+if [[ ! $CONTINUE =~ ^[Yy]$ ]]; then 
+    echo ""
+    exit 1
+else
+    sudo systemctl start checkers_api.service
 fi
