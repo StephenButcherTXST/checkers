@@ -9,7 +9,7 @@ This is a single end-point API that accepts valid JSON containg a square grid (r
 ### Install dependencies
 sudo yum install git python36
 
-python3 -m install virtualenv --user
+python3 -m pip install virtualenv --user
 ### Create folder
 mkdir ~/checkers && cd ~/checkers
 ### Clone this repository
