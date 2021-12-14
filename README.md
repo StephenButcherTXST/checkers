@@ -12,8 +12,10 @@ bash centos-install.sh
 
 ## Manual Installation
 ### Install dependencies
-sudo yum -y install epel-release
-sudo yum -y install git python36
+sudo yum install epel-release
+
+sudo yum install git python36
+
 python3 -m install virtualenv --user
 ### Create folder
 mkdir ~/checkers && cd ~/checkers
