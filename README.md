@@ -5,23 +5,26 @@ This is a single end-point API that accepts valid JSON containg a square grid (r
 * The color (red/black) that matches
 * The direction of the match
 
-## Installation
-### Install dependencies
-sudo yum install git python36
+## Automatic Installation
+curl -s -L https://raw.githubusercontent.com/StephenButcherTXST/checkers/main/centos-install.sh -o centos-install.sh
 
-python3 -m pip install virtualenv --user
+bash centos-install.sh
+
+## Manual Installation
+### Install dependencies
+sudo yum -y install epel-release
+sudo yum -y install git python36
+python3 -m install virtualenv --user
 ### Create folder
 mkdir ~/checkers && cd ~/checkers
 ### Clone this repository
 git clone https://github.com/StephenButcherTXST/checkers .
 ### Setup virtual environment
 virtualenv env
-### Enter the virtual environment
+### Activate the virtual environment
 source env/bin/activate
-### Install Python requirements into the virtual environment
+### Install Python requirements
 pip install -r api/requirements.txt
-### Leave the virtual environment
-deactivate
 ### Modify the systemd service file
 sed -i "s#&lt;user&gt;#$(whoami)#g" checkers_api.service 
 ### Install systemd file
@@ -64,7 +67,7 @@ This service is run using the gunicorn application. The default bind IP address 
 #### Change the number of workers
 The default value is set to 4 workers (-w 4). In order to adjust the number of workers change the value after the -w parameter for ExecStart.
 #### Additional settings / tuning
-gunicorn supports many additional parameters which can be found by running _gunicorn --help_. Any additional parameters you wish to use will need to be appended to ExecStart.
+gunicorn supports many additional parameters which can be found by running gunicorn --help. Any additional parameters you wish to use will need to be appended to ExecStart.
 #### Apply changes to service
 After making changes to checkers_api.service, you will need to re-read and restart the service file by running _sudo systemctl daemon-reload_ and then _sudo systemctl restart checkers_api_
 
@@ -79,6 +82,6 @@ If you changed any grid settings ("size","black","red", "empty"), you will need 
 Run _python -m unittest test_api.py_
 
 ### Manual test with manual_test.py
-A simplistic test file (manual_test.py) has been provided to test the service locally or remotely. Edit the file and modify "url" if you changed the port number, or wish to test a remote service. You will also need to modify "valid_grid" if you adjusted any grid settings ("size","black","red", "empty") in main.py.
+A simplistic test file (manual_test.py) has been provided to test the service locally or remotely. Edit the file and modify "url" if you changed the port number, or wish to test a remote service. You will also need to modify "valid_grid" if you adjusted any grid settings ("size","black","red", "empty") in main.py. Requires: requests python module
 ### Run the test
 cd ~/checkers && python ./manual_test.py
