@@ -8,9 +8,9 @@ echo "  Create a python virtual environment, and populate it with packages from 
 echo "  Register and start the service with systemd [sudo]"
 echo "  Automatically add firewall exception, if FirewallD is in use. [sudo]"
 
-echo "Continue (Y/N):"
-read CONTINUE
-if [[ $(echo "$CONTINUE" | egrep -i "^y") -ne "" ]]; then 
+echo 
+read -p "Continue (Y/N):" -n 1 -r CONTINUE
+if [[ ! $CONTINUE =~ ^[Yy]$ ]]; then 
     exit 1
 fi
 
