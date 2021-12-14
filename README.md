@@ -13,7 +13,7 @@ python3 -m install virtualenv --user
 mkdir ~/checkers
 cd ~/checkers
 ### Clone this repository
-git clone <> .
+git clone https://github.com/StephenButcherTXST/checkers .
 ### Setup virtual environment
 virtualenv env
 ### Activate the virtual environment
