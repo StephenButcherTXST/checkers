@@ -1,9 +1,10 @@
 #!/bin/bash
 
+trap "exit" INT
+
 echo "This script will perform the following actions:"
-echo "  Enable EPEL repository [sudo]"
 echo "  Install dependencies (git, python36) [sudo]"
-echo "  Download code from git into ~/checkers [git]"
+echo "  Download code from git into ~/checkers"
 echo "  Create a python virtual environment, and populate it with packages from requirements.txt"
 echo "  Register and start the service with systemd [sudo]"
 echo "  Automatically add firewall exception, if FirewallD is in use. [sudo]"
@@ -16,8 +17,14 @@ if [[ ! $CONTINUE =~ ^[Yy]$ ]]; then
 fi
 
 echo ""
+echo "===== Testing sudo access ====="
+sudo -v
+if [ $? != 0 ]; then
+    echo "Error using sudo. Confirm you have sudo access and then retry installation."
+    exit 1
+fi
+
 echo "===== Installing dependencies ====="
-sudo yum install -y epel-release
 sudo yum install -y git python36
 python3 -m pip install virtualenv --user
 
@@ -65,5 +72,7 @@ if [[ ! $CONTINUE =~ ^[Yy]$ ]]; then
     echo ""
     exit 1
 else
+    echo ""
+    echo "===== Starting service ====="
     sudo systemctl start checkers_api.service
 fi
