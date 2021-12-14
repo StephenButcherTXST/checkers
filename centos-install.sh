@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo "This script will perform the following actions:"
+echo "  Enable EPEL repository [sudo]"
 echo "  Install dependencies (git, python36) [sudo]"
 echo "  Download code from git into ~/checkers [git]"
 echo "  Create a python virtual environment, and populate it with packages from requirements.txt"
@@ -14,7 +15,8 @@ if [[ $(echo "$CONTINUE" | egrep -i "^y") -ne "" ]]; then
 fi
 
 echo "===== Installing dependencies ====="
-sudo yum install git python36
+sudo yum install -y epel-release
+sudo yum install -y git python36
 python3 -m pip install virtualenv --user
 
 echo "===== ===== Creating folder ====="
