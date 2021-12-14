@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance daemon to Checkers API
+After=network.target
+
+[Service]
+User=<user>
+Group=nginx
+WorkingDirectory=/home/<user>/checkers/api
+Environment="PATH=/home/<user>/checkers/api/env/bin"
+ExecStart=/home/user/<user>/checkers/api/env/bin/gunicorn wsgi -w 4 -b "0.0.0.0:5000"
+
+[Install]
+WanterBy=multi-user.target
