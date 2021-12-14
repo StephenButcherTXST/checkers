@@ -16,10 +16,12 @@ mkdir ~/checkers && cd ~/checkers
 git clone https://github.com/StephenButcherTXST/checkers .
 ### Setup virtual environment
 virtualenv env
-### Activate the virtual environment
+### Enter the virtual environment
 source env/bin/activate
-### Install Python requirements
+### Install Python requirements into the virtual environment
 pip install -r api/requirements.txt
+### Leave the virtual environment
+deactivate
 ### Modify the systemd service file
 sed -i "s#&lt;user&gt;#$(whoami)#g" checkers_api.service 
 ### Install systemd file
