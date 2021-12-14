@@ -22,7 +22,7 @@ source env/bin/activate
 ### Install Python requirements
 pip install -r api/requirements.txt
 ### Modify the systemd service file
-sed -i "s#<user>#$(whoami)#g" checkers_api.service 
+sed -i "s#&lt;user&gt;#$(whoami)#g" checkers_api.service 
 ### Install systemd file
 sudo cp checkers_api.service /etc/systemd/system
 ### Enable and start service
